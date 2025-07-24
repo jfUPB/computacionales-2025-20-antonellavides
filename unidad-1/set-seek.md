@@ -43,13 +43,13 @@ Para leer el teclado, uno tiene que ir a la dirección READKEYBOARD y revisar si
 
 Un bucle se ve como esto:
 
-asm
-Copy
-Edit
+``` asm
 (LOOP)
   // cosas que hace
   @LOOP
   0;JMP
+```
+
 
 Eso hace que el programa vuelva una y otra vez a repetir lo mismo. Sirve para que algo siga pasando hasta que tú decidas romper ese ciclo con una condición.
 
@@ -57,13 +57,12 @@ Eso hace que el programa vuelva una y otra vez a repetir lo mismo. Sirve para qu
 
 Una condición puede ser algo como:
 
-asm
-Copy
-Edit
+``` asm
 @i
 D=M
 @FIN
 D;JEQ
+```
 
 Ahí lo que se hace es revisar si lo que hay en i es cero. Si sí, el programa salta a la etiqueta FIN. Si no, sigue derecho. Es como decir: “si ya llegamos a cero, termina; si no, seguimos”.
 
