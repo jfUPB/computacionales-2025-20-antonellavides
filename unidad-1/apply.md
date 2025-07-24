@@ -11,6 +11,7 @@
 
  (LOOP) -> o tambien (START)
 
+``` asm
 @5
 D=M 77 -> Cargando en D lo de la posicion 5
 @10
@@ -30,9 +31,11 @@ M=0
 M=1
 @LOOP
 0;JMP
+```
 
 ## Actividad 04
 
+``` asm
 @1       -> Inicializa contador en 1
 D=A
 @i
@@ -71,6 +74,8 @@ M=D
 (END2)
   @END2
   0;JMP
+
+```
 
 ### Paso a paso
 
