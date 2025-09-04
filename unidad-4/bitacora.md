@@ -280,13 +280,14 @@ void ofApp::keyPressed(int key) {
 
 ## Demostración:
 
-[[Aquí está el video demostrativo de mi aplicación
+Aquí está el video demostrativo de mi aplicación
 
-https://youtu.be/rmKRVZ1mLpc
+[Video en YouTube](https://youtu.be/rmKRVZ1mLpc)
 
 
 ### Link p5.js 
-https://editor.p5js.org/antonellavides/full/X62OG7hg0
+[Sketch en p5.js](https://editor.p5js.org/antonellavides/full/X62OG7hg0)
+
 
 
 
