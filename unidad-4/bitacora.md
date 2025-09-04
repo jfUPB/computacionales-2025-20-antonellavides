@@ -282,10 +282,11 @@ void ofApp::keyPressed(int key) {
 
 [[Aquí está el video demostrativo de mi aplicación
 
-<iframe src="https://youtu.be/rmKRVZ1mLpc"></iframe>
+<src="https://youtu.be/rmKRVZ1mLpc"></iframe>
 
 
 ### Link p5.js 
-<iframe src="https://editor.p5js.org/antonellavides/full/X62OG7hg0"></iframe>
+<src="https://editor.p5js.org/antonellavides/full/X62OG7hg0"></iframe>
+
 
 
