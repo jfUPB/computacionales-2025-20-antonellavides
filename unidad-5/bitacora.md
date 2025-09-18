@@ -55,111 +55,34 @@ Pienso que el compilador es el que revisa que no se pueda acceder a un campo pri
 
 ### CICLO A 
 
-### 1. PREGUNTA: ¿Qué hace exactamente la aplicación de fuegos artificiales en openFrameworks y cómo organiza el código las diferentes explosiones y partículas?
+### 1. PREGUNTA: ¿Qué significa el encapsulamiento en C# y cómo se ve aplicado en el código de la clase Figura?
 
 ### 2. HIPOTESIS:
 
-Creo que la aplicación crea partículas que primero suben como “cohetes” y luego explotan en patrones
+Revisé el código:
 
-### 3. EXPERIMENTO
-
-Revisé el código fuente (ofApp.cpp y las clases de partículas).
-
-Corrí la aplicación en openFrameworks para observar su funcionamiento.
-
-Probé interacciones:
-
-Clic con el mouse → lanza un cohete.
-
-Barra espaciadora → lanza varios cohetes.
-
-Tecla s → guarda una captura de pantalla.
-
-### 4. HALLAZGO
-
-Confirmé que cada explosión está encapsulada en una clase distinta (CircularExplosion, SquareExplosion, StarExplosion).
-
-Vi que las clases manejan sus propias partículas, pero todas comparten una misma interfaz (draw, update).
-
-El uso del mouse y teclado permite comprobar la interacción en tiempo real.
-
-El programa demuestra los tres conceptos de POO:
-
-Encapsulamiento: cada explosión gestiona sus partículas sin que ofApp tenga que saber cómo.
-
-Herencia: todas las explosiones derivan de una clase base común.
-
-Polimorfismo: al llamar explosion->draw(), el programa decide en ejecución si dibuja círculo, cuadrado o estrella.
-
-Llamada polimorfica:
 ```
-for(auto& explosion : explosions) {
-    explosion->update();
-    explosion->draw();
+private string nombre;
+
+public string Nombre
+{
+    get { return nombre; }
+    protected set { nombre = value; }
 }
-
 ```
-### 5. REFLEXION
 
-El análisis me permitió ver cómo se estructura una aplicación interactiva usando POO. Entendí que los fuegos artificiales no son “efectos mágicos” sino objetos bien organizados que heredan comportamientos y redefinen métodos según su forma. Me parece interesante que con pocas líneas en ofApp se puedan manejar diferentes explosiones gracias al polimorfismo.
+Intenté ejecutar el programa, pero me salió un error de linker en Visual Studio.
 
-### CICLO B
-
-### 1. PREGUNTA: ¿Qué pasa en la memoria del computador cuando se crean objetos como ofApp, CircularExplosion o StarExplosion? ¿Cómo puedo comprobarlo con el depurador?
-
-### 2. HIPOTESIS:
-
-Pienso que cada objeto guarda sus datos en memoria de forma ordenada, como una caja que tiene compartimientos: primero los atributos de la clase base y después los de la clase hija. Tal vez con el depurador puedo ver esa estructura y comprobar qué valores tiene cada atributo en tiempo real.
+<img width="400" height="400" alt="error" src="https://github.com/user-attachments/assets/df6597bc-9488-4b05-bcc8-355875332399" />
 
 ### 3. EXPERIMENTO
 
-Abrí el proyecto en Visual Studio con el depurador activo.
-
-Coloqué puntos de interrupción (breakpoints) en:
-
-El constructor de CircularExplosion.
-
-El momento en que se crea un StarExplosion.
-
-Inspeccioné las variables en la ventana del depurador:
-
-Vi la instancia de ofApp.
-
-Revisé la lista explosions y exploré cada objeto con el mouse.
-
-Observé que cada explosión tenía sus atributos (posición, color, partículas) además del nombre heredado.
+Vi que aunque el programa no corrió por completo, sí identifiqué cómo el atributo nombre está protegido por ser private, y solo se controla con la propiedad pública Nombre.
 
 ### 4. HALLAZGO
 
-Confirmé que los objetos en memoria están organizados jerárquicamente: primero lo heredado de Explosion y luego lo específico de CircularExplosion o StarExplosion.
-
-Pude ver cómo cambian los valores cuando la animación avanza (por ejemplo, el radio del círculo aumentaba con cada frame).
-
-Me quedó claro que el depurador no solo sirve para corregir errores, sino también para entender cómo se representa un objeto en memoria.
+Vi que aunque el programa no corrió por completo, sí identifiqué cómo el atributo nombre está protegido por ser private, y solo se controla con la propiedad pública Nombre.
 
 ### 5. REFLEXION
 
-Usar el depurador fue clave para pasar de la teoría a lo concreto. Antes pensaba en herencia y objetos de forma abstracta, pero ahora vi directamente cómo se guardan y cambian en memoria. Eso me ayuda a confiar más en el código y entender cómo se conecta la POO con el funcionamiento real del computador.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+El encapsulamiento evita que cualquiera cambie directamente el nombre de la figura. Me di cuenta de que es útil cuando se quieren proteger datos, incluso aunque el código no compile bien.
