@@ -99,10 +99,47 @@ for(auto& explosion : explosions) {
 }
 
 ```
-## 5. REFLEXION
+### 5. REFLEXION
 
 El análisis me permitió ver cómo se estructura una aplicación interactiva usando POO. Entendí que los fuegos artificiales no son “efectos mágicos” sino objetos bien organizados que heredan comportamientos y redefinen métodos según su forma. Me parece interesante que con pocas líneas en ofApp se puedan manejar diferentes explosiones gracias al polimorfismo.
 
+### CICLO B
+
+### 1. PREGUNTA: ¿Qué pasa en la memoria del computador cuando se crean objetos como ofApp, CircularExplosion o StarExplosion? ¿Cómo puedo comprobarlo con el depurador?
+
+### 2. HIPOTESIS:
+
+Pienso que cada objeto guarda sus datos en memoria de forma ordenada, como una caja que tiene compartimientos: primero los atributos de la clase base y después los de la clase hija. Tal vez con el depurador puedo ver esa estructura y comprobar qué valores tiene cada atributo en tiempo real.
+
+### 3. EXPERIMENTO
+
+Abrí el proyecto en Visual Studio con el depurador activo.
+
+Coloqué puntos de interrupción (breakpoints) en:
+
+El constructor de CircularExplosion.
+
+El momento en que se crea un StarExplosion.
+
+Inspeccioné las variables en la ventana del depurador:
+
+Vi la instancia de ofApp.
+
+Revisé la lista explosions y exploré cada objeto con el mouse.
+
+Observé que cada explosión tenía sus atributos (posición, color, partículas) además del nombre heredado.
+
+### 4. HALLAZGO
+
+Confirmé que los objetos en memoria están organizados jerárquicamente: primero lo heredado de Explosion y luego lo específico de CircularExplosion o StarExplosion.
+
+Pude ver cómo cambian los valores cuando la animación avanza (por ejemplo, el radio del círculo aumentaba con cada frame).
+
+Me quedó claro que el depurador no solo sirve para corregir errores, sino también para entender cómo se representa un objeto en memoria.
+
+### 5. REFLEXION
+
+Usar el depurador fue clave para pasar de la teoría a lo concreto. Antes pensaba en herencia y objetos de forma abstracta, pero ahora vi directamente cómo se guardan y cambian en memoria. Eso me ayuda a confiar más en el código y entender cómo se conecta la POO con el funcionamiento real del computador.
 
 
 
