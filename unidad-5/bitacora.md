@@ -47,11 +47,80 @@ Creo que el programa, al ejecutar, mira qué tipo real tiene el objeto y busca e
 
 Pienso que el compilador es el que revisa que no se pueda acceder a un campo private. O sea, la protección funciona más en el momento de escribir el código que en la ejecución, aunque de alguna manera esa información también queda guardada en el programa.
 
+### Que esta haciendo el codigo de la aplicacion:
+
+El código es una simulación de fuegos artificiales en openFrameworks. Primero crea partículas que suben desde la parte de abajo y cuando llegan a cierta altura explotan. De la explosión salen más partículas que forman distintos patrones: círculos, cuadrados al azar o estrellas. Con el mouse se lanza una partícula y con la barra espaciadora se lanzan muchas al mismo tiempo. También se puede guardar una imagen con la tecla s.
+
 ## 2.  **La pregunta inicial**
+
+¿Cómo se implementan en memoria y en tiempo de ejecución el polimorfismo, la herencia y el encapsulamiento en C++ (y qué relación tienen con lo que ya conozco de C#)?
 
 ## 3.  **Registro de exploración:** 
 > Aquí documentas cada ciclo de pregunta -> hipótesis -> experimento -> hallazgo -> reflexión.
 > Debe ser rico en evidencia visual (código, capturas del depurador con anotaciones, diagramas).
+
+### CICLO A 
+
+### 1. PREGUNTA: ¿Cómo identificar en el código de Figura, Circulo y Rectangulo ejemplos claros de encapsulamiento, herencia y polimorfismo?
+
+### 2. HIPOTESIS:
+
+Encapsulamiento: los campos privados se exponen solo a través de propiedades (Nombre).
+
+Herencia: se da cuando una clase declara : Figura.
+
+Polimorfismo: ocurre en el foreach (Figura fig in misFiguras) porque llama a Dibujar() sin saber el tipo concreto.
+
+### 3. EXPERIMENTO
+
+```cs
+private string nombre;   // Encapsulamiento: campo privado
+public string Nombre { get { return nombre; } protected set { nombre = value; } } // Encapsulación controlada
+```
+```
+public class Circulo : Figura {  // Herencia
+    public override void Dibujar() { ... }  // Polimorfismo (sobrescribe)
+}
+```
+```
+foreach (Figura fig in misFiguras) {
+    fig.Dibujar();  // Polimorfismo dinámico
+}
+```
+
+### 4. HALLAZGO
+
+Sí se cumple:
+
+El encapsulamiento está en private string nombre más la propiedad.
+
+La herencia en la declaración de clases derivadas.
+
+El polimorfismo en la llamada fig.Dibujar(), que ejecuta la versión adecuada.
+
+### 5. REFLEXION
+
+El diseño permite manipular diferentes figuras de manera genérica. Esto es la base de cómo después en ofApp manejamos std::vector<Particle*> sin importar el tipo concreto de partícula.
+
+```
+           ┌─────────────┐
+           │   Figura    │
+           │─────────────│
+           │ - nombre    │   (campo privado)
+           │ + Nombre{}  │   (propiedad: encapsulamiento)
+           │ + Dibujar() │   (método virtual)
+           └──────┬──────┘
+                  │
+   ┌──────────────┴───────────────┐
+   │                              │
+┌─────────────┐             ┌─────────────┐
+│  Circulo    │             │ Rectangulo  │
+│─────────────│             │─────────────│
+│ + Dibujar() │ (override)  │ + Dibujar() │ (override)
+└─────────────┘             └─────────────┘
+```
+
+Encapsulamiento en el campo privado nombre, herencia con la flecha desde Figura hacia Circulo y Rectangulo, polimorfismo en que cada uno sobrescribe Dibujar().
 
 ## 4.  **Consolidación, autoevaluación y cierre:**
 > [!CAUTION]
