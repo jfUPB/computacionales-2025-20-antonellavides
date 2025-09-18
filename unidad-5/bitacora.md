@@ -47,13 +47,7 @@ Creo que el programa, al ejecutar, mira qué tipo real tiene el objeto y busca e
 
 Pienso que el compilador es el que revisa que no se pueda acceder a un campo private. O sea, la protección funciona más en el momento de escribir el código que en la ejecución, aunque de alguna manera esa información también queda guardada en el programa.
 
-### Que esta haciendo el codigo de la aplicacion:
-
-El código es una simulación de fuegos artificiales en openFrameworks. Primero crea partículas que suben desde la parte de abajo y cuando llegan a cierta altura explotan. De la explosión salen más partículas que forman distintos patrones: círculos, cuadrados al azar o estrellas. Con el mouse se lanza una partícula y con la barra espaciadora se lanzan muchas al mismo tiempo. También se puede guardar una imagen con la tecla s.
-
 ## 2.  **La pregunta inicial**
-
-¿Cómo se implementan en memoria y en tiempo de ejecución el polimorfismo, la herencia y el encapsulamiento en C++ (y qué relación tienen con lo que ya conozco de C#)?
 
 ## 3.  **Registro de exploración:** 
 > Aquí documentas cada ciclo de pregunta -> hipótesis -> experimento -> hallazgo -> reflexión.
@@ -61,67 +55,74 @@ El código es una simulación de fuegos artificiales en openFrameworks. Primero 
 
 ### CICLO A 
 
-### 1. PREGUNTA: ¿Cómo identificar en el código de Figura, Circulo y Rectangulo ejemplos claros de encapsulamiento, herencia y polimorfismo?
+### 1. PREGUNTA: ¿Qué hace exactamente la aplicación de fuegos artificiales en openFrameworks y cómo organiza el código las diferentes explosiones y partículas?
 
 ### 2. HIPOTESIS:
 
-Encapsulamiento: los campos privados se exponen solo a través de propiedades (Nombre).
-
-Herencia: se da cuando una clase declara : Figura.
-
-Polimorfismo: ocurre en el foreach (Figura fig in misFiguras) porque llama a Dibujar() sin saber el tipo concreto.
+Creo que la aplicación crea partículas que primero suben como “cohetes” y luego explotan en patrones
 
 ### 3. EXPERIMENTO
 
-```cs
-private string nombre;   // Encapsulamiento: campo privado
-public string Nombre { get { return nombre; } protected set { nombre = value; } } // Encapsulación controlada
-```
-```
-public class Circulo : Figura {  // Herencia
-    public override void Dibujar() { ... }  // Polimorfismo (sobrescribe)
-}
-```
-```
-foreach (Figura fig in misFiguras) {
-    fig.Dibujar();  // Polimorfismo dinámico
-}
-```
+Revisé el código fuente (ofApp.cpp y las clases de partículas).
+
+Corrí la aplicación en openFrameworks para observar su funcionamiento.
+
+Probé interacciones:
+
+Clic con el mouse → lanza un cohete.
+
+Barra espaciadora → lanza varios cohetes.
+
+Tecla s → guarda una captura de pantalla.
 
 ### 4. HALLAZGO
 
-Sí se cumple:
+Confirmé que cada explosión está encapsulada en una clase distinta (CircularExplosion, SquareExplosion, StarExplosion).
 
-El encapsulamiento está en private string nombre más la propiedad.
+Vi que las clases manejan sus propias partículas, pero todas comparten una misma interfaz (draw, update).
 
-La herencia en la declaración de clases derivadas.
+El uso del mouse y teclado permite comprobar la interacción en tiempo real.
 
-El polimorfismo en la llamada fig.Dibujar(), que ejecuta la versión adecuada.
+El programa demuestra los tres conceptos de POO:
 
-### 5. REFLEXION
+Encapsulamiento: cada explosión gestiona sus partículas sin que ofApp tenga que saber cómo.
 
-El diseño permite manipular diferentes figuras de manera genérica. Esto es la base de cómo después en ofApp manejamos std::vector<Particle*> sin importar el tipo concreto de partícula.
+Herencia: todas las explosiones derivan de una clase base común.
+
+Polimorfismo: al llamar explosion->draw(), el programa decide en ejecución si dibuja círculo, cuadrado o estrella.
+
+Llamada polimorfica:
+```
+for(auto& explosion : explosions) {
+    explosion->update();
+    explosion->draw();
+}
 
 ```
-           ┌─────────────┐
-           │   Figura    │
-           │─────────────│
-           │ - nombre    │   (campo privado)
-           │ + Nombre{}  │   (propiedad: encapsulamiento)
-           │ + Dibujar() │   (método virtual)
-           └──────┬──────┘
-                  │
-   ┌──────────────┴───────────────┐
-   │                              │
-┌─────────────┐             ┌─────────────┐
-│  Circulo    │             │ Rectangulo  │
-│─────────────│             │─────────────│
-│ + Dibujar() │ (override)  │ + Dibujar() │ (override)
-└─────────────┘             └─────────────┘
-```
+## 5. REFLEXION
 
-Encapsulamiento en el campo privado nombre, herencia con la flecha desde Figura hacia Circulo y Rectangulo, polimorfismo en que cada uno sobrescribe Dibujar().
+El análisis me permitió ver cómo se estructura una aplicación interactiva usando POO. Entendí que los fuegos artificiales no son “efectos mágicos” sino objetos bien organizados que heredan comportamientos y redefinen métodos según su forma. Me parece interesante que con pocas líneas en ofApp se puedan manejar diferentes explosiones gracias al polimorfismo.
 
-## 4.  **Consolidación, autoevaluación y cierre:**
-> [!CAUTION]
-> Esta sección es OBLIGATORIA y central para tu evaluación
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
